@@ -1,5 +1,5 @@
 #pragma once
-#include <C:\Users\User\Documents\github\Queue\Queue\queue.h>
+#include <C:\Users\solujanov.a\Documents\github\Queue\Queue\queue.h>
 #include <math.h>
 
 namespace QueueApp {
@@ -36,7 +36,6 @@ namespace QueueApp {
 		{
 			InitializeComponent();
 			gr = pictureBox1->CreateGraphics();
-			//task = new TQueue<TTask>[1000];
 			//
 			//TODO: Add the constructor code here
 			//
@@ -200,13 +199,38 @@ namespace QueueApp {
 		}
 #pragma endregion
 
-		void FillProcessor(TProc pr, Color col) {
-			SolidBrush^ TBrush = gcnew SolidBrush(col);
+		void FillProcessor(TProc pr, int tskcolor) {
+			Color TaskColor;
+			switch (tskcolor)
+		{
+		case 0:
+			TaskColor = Color::Yellow; break;
+		case 1:
+			TaskColor = Color::Blue; break;
+		case 2:
+			TaskColor = Color::Green; break;
+		case 3:
+			TaskColor = Color::Brown; break;
+		case 4:
+			TaskColor = Color::Black; break;
+		case 5:
+			TaskColor = Color::DarkBlue; break;
+		case 6:
+			TaskColor = Color::Pink; break;
+		case 7:
+			TaskColor = Color::SpringGreen; break;
+		case 8:
+			TaskColor = Color::Aqua; break;
+		case 9:
+			TaskColor = Color::Red; break;
+		}
+			SolidBrush^ TBrush = gcnew SolidBrush(TaskColor);
 			gr->FillRectangle(TBrush, pr.x1, pr.y1, pr.x2, pr.y2);
 		}
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	int maxsize = Convert::ToInt32(textBox1->Text);
+	task = new TQueue<TTask>;
+    int maxsize = Convert::ToInt32(textBox1->Text);
 	procs = new TProc[maxsize-1];
 	int LengthSide = sqrt(((double)pictureBox1->Height)*((double)pictureBox1->Height) / maxsize);
 	procs[0].x1 = 0;
@@ -214,7 +238,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	procs[0].x2 = LengthSide - 5;
 	procs[0].y2 = LengthSide - 5;
 	int k = 0;
-	SolidBrush^ blueBrush = gcnew SolidBrush(Color::Blue);
+	SolidBrush^ GreenBrush = gcnew SolidBrush(Color::Green);
 	//gr->DrawRectangle(Pens::Black, x1, y1, x2, y2);
 	/*for (int i = 0; i < sqrt((double)maxsize) - 1; i++) {
 		for (int j = 0; j < sqrt((double)maxsize) - 1; j++) {
@@ -232,7 +256,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 	}*/
 	for (int i = 0; i < sqrt((double)maxsize); i++) {
 		for (int j = 0; j < sqrt((double)maxsize) ; j++) {
-			gr->FillRectangle(blueBrush, procs[k].x1, procs[k].y1, procs[k].x2, procs[k].y2);
+			gr->FillRectangle(GreenBrush, procs[k].x1, procs[k].y1, procs[k].x2, procs[k].y2);
 			procs[k + 1].x1 = procs[k].x1 + LengthSide;
 			procs[k + 1].x2 = procs[k].x2;
 			procs[k + 1].y1 = procs[k].y1;
@@ -252,7 +276,8 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 
 }
 private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-	int probability = rand() % 100;
+    task = new TQueue<TTask>[1000];
+    int probability = rand() % 100;
 	int taskID = 1;
 	int NumberFree = 0;
 	int maxsize = Convert::ToInt32(textBox1->Text);
@@ -263,12 +288,13 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 		tsk.StepCount = rand() % (Convert::ToInt32(textBox3->Text));
 		tsk.ProcCount = rand() % (Convert::ToInt32(textBox4->Text));
 		tsk.setcolor();
-		task.push(tsk);
+		task->push(tsk);
 	}
 		for (int i = 0; i < maxsize; i++) {
 			if (!procs[i].idle && procs[i].TaskStepCount == 0) {
 				procs[i].idle = true;
-				//Отрисовка в старый цвет.
+				
+				FillProcessor(procs[i], 2);
 			}
 			if (procs[i].idle)
 				NumberFree++;
@@ -277,7 +303,24 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 		}
 
 
-		for (int i = 0; i < task.getSize(); i++)
+		for (int i = 0; i < task->getSize(); i++) {
+			TTask task1 = task->pop();
+			if (task1.ProcCount < NumberFree) {
+				int k = 0;
+				task1.setcolor();
+				while  (task1.ProcCount != 0 && k < maxsize) {
+					if (procs[k].idle) {
+						procs[k].idle = false;
+						FillProcessor(procs[k], task1.TaskColor);
+						procs[k].EmptyCount = task1.StepCount;
+						task1.ProcCount--;
+					}
+					k++;
+				}
+				continue;
+			}
+			task->push(task1);
+		}
 	
 
 

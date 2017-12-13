@@ -1,4 +1,4 @@
-using namespace System::Drawing;
+//using namespace System::Drawing;
 #include <cstdlib>
 template <class T>
 
@@ -51,7 +51,7 @@ public:
 	}
 
 	bool isfull() {
-		return (size == masxize);
+		return (size == maxsize);
 	}
 
 	void push(T elem) {
@@ -102,35 +102,13 @@ public:
 
 
 struct TTask {
-	Color TaskColor;
+	int TaskColor;
 	int StepCount; 
 	int ProcCount;
 	int id;
 	void setcolor() { 
 		int i = rand() % 10;
-		switch (i)
-		{
-		case 0:
-			TaskColor = Color::Yellow; break;
-		case 1:
-			TaskColor = Color::Blue; break;
-		case 2:
-			TaskColor = Color::Green; break;
-		case 3:
-			TaskColor = Color::Brown; break;
-		case 4:
-			TaskColor = Color::Black; break;
-		case 5:
-			TaskColor = Color::DarkBlue; break;
-		case 6:
-			TaskColor = Color::Pink; break;
-		case 7:
-			TaskColor = Color::SpringGreen; break;
-		case 8:
-			TaskColor = Color::Aqua; break;
-		case 9:
-			TaskColor = Color::Red; break;
-		}
+		TaskColor = i;
 	}
 };
 
