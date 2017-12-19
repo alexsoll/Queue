@@ -1,5 +1,6 @@
 #pragma once
-#include <C:\Users\solujanov.a\Documents\github\Queue\Queue\queue.h>
+#include <C:\Users\User\Documents\github\Queue\Queue\queue.h>
+//#include <ñmath>
 #include <math.h>
 
 namespace QueueApp {
@@ -31,6 +32,9 @@ namespace QueueApp {
 		Graphics^ gr;
 		TProc *procs;
 		TQueue<TTask> *task;
+		int taskID;
+		int NumberFree;
+		int maxsize;
 		
 		MyForm(void)
 		{
@@ -124,7 +128,7 @@ namespace QueueApp {
 			// 
 			// timer1
 			// 
-			this->timer1->Interval = 2000;
+			this->timer1->Interval = 500;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// label2
@@ -208,7 +212,7 @@ namespace QueueApp {
 		case 1:
 			TaskColor = Color::Blue; break;
 		case 2:
-			TaskColor = Color::Green; break;
+			TaskColor = Color::DarkViolet; break;
 		case 3:
 			TaskColor = Color::Brown; break;
 		case 4:
@@ -229,39 +233,35 @@ namespace QueueApp {
 		}
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	task = new TQueue<TTask>;
+	task = new TQueue<TTask>[1000];
+	int taskID = 1;
+	int NumberFree = 0;
     int maxsize = Convert::ToInt32(textBox1->Text);
-	procs = new TProc[maxsize-1];
-	int LengthSide = sqrt(((double)pictureBox1->Height)*((double)pictureBox1->Height) / maxsize);
+	int newsize = ceil(sqrt((double)maxsize));
+	procs = new TProc[maxsize];
+	int LengthSide = sqrt(((double)pictureBox1->Height)*((double)pictureBox1->Height) / (newsize*newsize)); /////////////
 	procs[0].x1 = 0;
 	procs[0].y1 = 0;
 	procs[0].x2 = LengthSide - 5;
 	procs[0].y2 = LengthSide - 5;
 	int k = 0;
+	int stop = 0;
 	SolidBrush^ GreenBrush = gcnew SolidBrush(Color::Green);
-	//gr->DrawRectangle(Pens::Black, x1, y1, x2, y2);
-	/*for (int i = 0; i < sqrt((double)maxsize) - 1; i++) {
-		for (int j = 0; j < sqrt((double)maxsize) - 1; j++) {
-			gr->FillRectangle(blueBrush, procs[k].x1, procs[k].y1, procs[k].x2, procs[k].y2);
-			procs[k + 1].x1 = procs[k].x1 + LengthSide;
-			procs[k + 1].x2 = procs[k].x2 + LengthSide;
-			procs[k + 1].y1 = procs[k].y1;
-			procs[k + 1].y2 = procs[k].y2;
-			k++;
-		}
-		procs[k].x1 = 0;
-		procs[k].y1 = procs[k - 1].y1 + LengthSide;
-		procs[k].x2 = LengthSide - 5;
-		procs[k].y2 = procs[k - 1].y2 + LengthSide - 5;
-	}*/
-	for (int i = 0; i < sqrt((double)maxsize); i++) {
-		for (int j = 0; j < sqrt((double)maxsize) ; j++) {
+	for (int i = 0; i < newsize; i++) {
+		for (int j = 0; j < newsize; j++) {
 			gr->FillRectangle(GreenBrush, procs[k].x1, procs[k].y1, procs[k].x2, procs[k].y2);
+			stop++;
+			if (stop == maxsize) {
+				break;
+			}
 			procs[k + 1].x1 = procs[k].x1 + LengthSide;
 			procs[k + 1].x2 = procs[k].x2;
 			procs[k + 1].y1 = procs[k].y1;
 			procs[k + 1].y2 = procs[k].y2;
 			k++;
+		}
+		if (stop == maxsize) {
+			break;
 		}
 		if (k != maxsize) {
 			procs[k].x1 = 0;
@@ -276,12 +276,9 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 
 }
 private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-    task = new TQueue<TTask>[1000];
-    int probability = rand() % 100;
-	int taskID = 1;
-	int NumberFree = 0;
 	int maxsize = Convert::ToInt32(textBox1->Text);
-	if (probability > Convert::ToInt32(textBox2->Text)) {
+	int probability = rand() % 100;
+	if (probability < Convert::ToInt32(textBox2->Text)) {
 		TTask tsk;
 		tsk.id = taskID;
 		taskID++;
@@ -307,12 +304,12 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 			TTask task1 = task->pop();
 			if (task1.ProcCount < NumberFree) {
 				int k = 0;
-				task1.setcolor();
+				//task1.setcolor();
 				while  (task1.ProcCount != 0 && k < maxsize) {
 					if (procs[k].idle) {
 						procs[k].idle = false;
 						FillProcessor(procs[k], task1.TaskColor);
-						procs[k].EmptyCount = task1.StepCount;
+						procs[k].TaskStepCount = task1.StepCount;
 						task1.ProcCount--;
 					}
 					k++;
