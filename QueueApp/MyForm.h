@@ -1,6 +1,5 @@
 ﻿#pragma once
-#include <C:\Users\solujanov.a\Documents\github\Queue\Queue\queue.h>
-//#include <ñmath>
+#include <C:\Users\User\Documents\github\Queue\Queue\queue.h>
 #include <math.h>
 
 namespace QueueApp {
@@ -36,7 +35,7 @@ namespace QueueApp {
 		int NumberFree;
 		int NumOfTasksInQueue;
 			int taskcount;
-			int NumOfTasksNotAdded;
+		//	int NumOfTasksNotAdded;
 	private: System::Windows::Forms::Button^  button1;
 	public: 
 	private: System::Windows::Forms::Label^  label1;
@@ -45,12 +44,14 @@ namespace QueueApp {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Label^  label5;
-	private: System::Windows::Forms::Label^  label6;
+
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::TextBox^  textBox2;
 	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::TextBox^  textBox4;
 	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::Button^  button2;
+	private: System::Windows::Forms::Button^  button3;
 
 	public: 
 
@@ -107,13 +108,14 @@ namespace QueueApp {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -123,18 +125,18 @@ namespace QueueApp {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(232, 12);
+			this->button1->Location = System::Drawing::Point(271, 41);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 0;
-			this->button1->Text = L"Старт";
+			this->button1->Text = L"Отобразить";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(12, 17);
+			this->label1->Location = System::Drawing::Point(12, 44);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(108, 13);
 			this->label1->TabIndex = 1;
@@ -142,7 +144,7 @@ namespace QueueApp {
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(126, 14);
+			this->textBox1->Location = System::Drawing::Point(135, 41);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(100, 20);
 			this->textBox1->TabIndex = 2;
@@ -177,20 +179,11 @@ namespace QueueApp {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(375, 49);
+			this->label5->Location = System::Drawing::Point(12, 325);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(35, 13);
+			this->label5->Size = System::Drawing::Size(167, 13);
 			this->label5->TabIndex = 6;
-			this->label5->Text = L"label5";
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(375, 83);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(35, 13);
-			this->label6->TabIndex = 7;
-			this->label6->Text = L"label6";
+			this->label5->Text = L"0 Number of generated tasks total";
 			// 
 			// pictureBox1
 			// 
@@ -224,23 +217,44 @@ namespace QueueApp {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(375, 121);
+			this->label7->Location = System::Drawing::Point(12, 373);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(35, 13);
+			this->label7->Size = System::Drawing::Size(144, 13);
 			this->label7->TabIndex = 12;
-			this->label7->Text = L"label7";
+			this->label7->Text = L"0 Number of Taskd in Queue";
+			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(604, 7);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->TabIndex = 13;
+			this->button2->Text = L"Стоп";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(523, 7);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->TabIndex = 14;
+			this->button3->Text = L"Старт";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(755, 664);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->textBox4);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->pictureBox1);
-			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
@@ -250,7 +264,7 @@ namespace QueueApp {
 			this->Controls->Add(this->button1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -281,32 +295,35 @@ namespace QueueApp {
 			TaskColor = Color::Aqua; break;
 		case 9:
 			TaskColor = Color::Red; break;
+		case 10:
+			TaskColor = Color::Green; break;
 		}
 			SolidBrush^ TBrush = gcnew SolidBrush(TaskColor);
 			gr->FillRectangle(TBrush, pr.x1, pr.y1, pr.x2, pr.y2);
 		}
 
 private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-	NumberFree = 0;
+	NumberFree = 0; // Число свободных процессоров
 	int maxsize = Convert::ToInt32(textBox1->Text);
 	int probability = rand() % 100;
 	if (probability < Convert::ToInt32(textBox2->Text)) {
 		TTask tsk;
 		tsk.id = taskID;
 		taskID++;
-		taskcount++;
 		tsk.StepCount = rand() % (Convert::ToInt32(textBox3->Text));
 		tsk.ProcCount = rand() % (Convert::ToInt32(textBox4->Text));
 		tsk.setcolor();
 		task->push(tsk);
+
 		NumOfTasksInQueue++;
+		taskcount++;
 	}
 		label5->Text = Convert::ToString(taskcount) + L" Number of generated tasks total";
 		for (int i = 0; i < maxsize; i++) {
 			if (!procs[i].idle && procs[i].TaskStepCount == 0) {
 				procs[i].idle = true;
 				
-				FillProcessor(procs[i], 2);
+				FillProcessor(procs[i], 10);
 			}
 			if (procs[i].idle)
 				NumberFree++;
@@ -315,14 +332,10 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 		}
 
 
-		//for (int i = 0; i < task->getSize(); i++) {
+		for (int i = 0; i < task->getSize(); i++) {
 			TTask task1 = task->pop();
 			if (task1.ProcCount < NumberFree) {
 				int k = 0;
-				//NumOfTasksNotAdded++;
-				//label6->Text = Convert::ToString(NumOfTasksAdded) + L" Number of tasks added";
-				//task1.setcolor();
-				NumOfTasksInQueue--;
 				while  (task1.ProcCount != 0 && k < maxsize) {
 					if (procs[k].idle) {
 						procs[k].idle = false;
@@ -332,24 +345,20 @@ private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e
 					}
 					k++;
 				}
-			//	continue;
+				NumOfTasksInQueue--;
+				continue;
 			}
 			else {
-			NumOfTasksNotAdded++;
-			label6->Text = Convert::ToString(NumOfTasksNotAdded) + " Number of tasks not added";
 			task->push(task1);
-			NumOfTasksInQueue++;
-			label7->Text = Convert::ToString(NumOfTasksInQueue) + " Num of Taskd in Queue";
 			}
-		//}
-	
-
+		}
+		label7->Text = Convert::ToString(NumOfTasksInQueue) + " Num of Taskd in Queue";
 
 }
 private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
-	NumOfTasksInQueue = 0;
-	NumOfTasksNotAdded = 0;
-	taskcount = 0;		 
+	gr->FillRectangle(Brushes::White, 0, 0, 500, 500);
+	NumOfTasksInQueue = 0; // Число задач, находящихся на данный момент в очереди
+	taskcount = 0; // Число задач, сгенерированных за все время работы таймера
 	task = new TQueue<TTask>[1000];
 	int taskID = 1;
     int maxsize = Convert::ToInt32(textBox1->Text);
@@ -386,10 +395,16 @@ private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs
 			procs[k].y2 = procs[k - 1].y2;
 		}
 	}
-	timer1->Enabled = true;
+	//timer1->Enabled = true;
 
 
 
 		 }
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+	timer1->Enabled = false;
+}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	timer1->Enabled = true;
+}
 };
 }
